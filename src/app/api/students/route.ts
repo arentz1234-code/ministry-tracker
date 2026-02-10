@@ -12,6 +12,7 @@ export async function GET(request: NextRequest) {
   const search = searchParams.get('search') || '';
   const status = searchParams.get('status');
   const year = searchParams.get('year');
+  const gender = searchParams.get('gender');
   const tag = searchParams.get('tag');
 
   const where: any = {};
@@ -30,6 +31,10 @@ export async function GET(request: NextRequest) {
 
   if (year && year !== 'all') {
     where.year = year;
+  }
+
+  if (gender && gender !== 'all') {
+    where.gender = gender;
   }
 
   if (tag) {

@@ -12,6 +12,7 @@ interface Student {
   name: string;
   email: string | null;
   phone: string | null;
+  gender: string | null;
   year: string;
   major: string | null;
   status: string;
@@ -40,12 +41,19 @@ const yearOptions = [
   { value: 'Grad', label: 'Graduate' },
 ];
 
+const genderOptions = [
+  { value: 'all', label: 'All Genders' },
+  { value: 'male', label: 'Male' },
+  { value: 'female', label: 'Female' },
+];
+
 export default function StudentsPage() {
   const [students, setStudents] = useState<Student[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [yearFilter, setYearFilter] = useState('all');
+  const [genderFilter, setGenderFilter] = useState('all');
 
   const fetchStudents = async () => {
     setLoading(true);
@@ -53,6 +61,7 @@ export default function StudentsPage() {
     if (search) params.set('search', search);
     if (statusFilter !== 'all') params.set('status', statusFilter);
     if (yearFilter !== 'all') params.set('year', yearFilter);
+    if (genderFilter !== 'all') params.set('gender', genderFilter);
 
     const res = await fetch(`/api/students?${params}`);
     const data = await res.json();
@@ -62,7 +71,7 @@ export default function StudentsPage() {
 
   useEffect(() => {
     fetchStudents();
-  }, [statusFilter, yearFilter]);
+  }, [statusFilter, yearFilter, genderFilter]);
 
   useEffect(() => {
     const timer = setTimeout(fetchStudents, 300);
@@ -127,6 +136,12 @@ export default function StudentsPage() {
             onChange={(e) => setYearFilter(e.target.value)}
             className="w-40"
           />
+          <Select
+            options={genderOptions}
+            value={genderFilter}
+            onChange={(e) => setGenderFilter(e.target.value)}
+            className="w-40"
+          />
         </div>
       </div>
 
@@ -160,7 +175,10 @@ export default function StudentsPage() {
                     <h3 className="font-semibold text-slate-800 truncate">{student.name}</h3>
                     <span className={getStatusBadge(student.status)}>{student.status}</span>
                   </div>
-                  <p className="text-sm text-slate-500">{student.year} • {student.major || 'No major'}</p>
+                  <p className="text-sm text-slate-500">
+                    {student.gender ? `${student.gender.charAt(0).toUpperCase() + student.gender.slice(1)} • ` : ''}
+                    {student.year} • {student.major || 'No major'}
+                  </p>
                   {student.email && (
                     <p className="text-sm text-slate-400 truncate">{student.email}</p>
                   )}
