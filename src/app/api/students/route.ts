@@ -18,9 +18,9 @@ export async function GET(request: NextRequest) {
 
   if (search) {
     where.OR = [
-      { name: { contains: search } },
-      { email: { contains: search } },
-      { major: { contains: search } },
+      { name: { contains: search, mode: 'insensitive' } },
+      { email: { contains: search, mode: 'insensitive' } },
+      { major: { contains: search, mode: 'insensitive' } },
     ];
   }
 
@@ -43,8 +43,8 @@ export async function GET(request: NextRequest) {
       _count: {
         select: {
           interactions: true,
-          followUps: { where: { completed: false } },
-          prayerRequests: { where: { status: 'active' } },
+          followUps: true,
+          prayerRequests: true,
         },
       },
     },
