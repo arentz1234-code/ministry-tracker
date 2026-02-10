@@ -1,0 +1,112 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Staff {
+  id            String         @id @default(cuid())
+  name          String
+  email         String         @unique
+  password      String
+  role          String         @default("staff") // admin, staff, volunteer
+  color         String         @default("#3b82f6")
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  interactions   Interaction[]
+  followUps      FollowUp[]
+  prayerRequests PrayerRequest[]
+  actionItems    ActionItem[]
+}
+
+model Student {
+  id            String         @id @default(cuid())
+  name          String
+  email         String?
+  phone         String?
+  year          String         // Freshman, Sophomore, Junior, Senior, Grad
+  major         String?
+  address       String?
+  status        String         @default("active") // active, inactive, graduated, transferred
+  photo         String?
+  tags          String?        // comma-separated: "new believer,leader,small group"
+  notes         String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  interactions   Interaction[]
+  followUps      FollowUp[]
+  prayerRequests PrayerRequest[]
+  actionItems    ActionItem[]
+}
+
+model Interaction {
+  id              String       @id @default(cuid())
+  studentId       String
+  staffId         String
+  date            DateTime
+  type            String       // 1-on-1, Small group, Event, Phone call, Text, Other
+  location        String?
+  notes           String?
+  isConfidential  Boolean      @default(false)
+  topics          String?      // comma-separated: "Gospel,Discipleship,Struggles"
+  attachments     String?      // JSON array of file paths
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  student    Student     @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  staff      Staff       @relation(fields: [staffId], references: [id], onDelete: Cascade)
+  actionItems ActionItem[]
+}
+
+model FollowUp {
+  id          String    @id @default(cuid())
+  studentId   String
+  staffId     String
+  dueDate     DateTime
+  priority    String    @default("medium") // high, medium, low
+  reason      String?
+  completed   Boolean   @default(false)
+  completedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  staff   Staff   @relation(fields: [staffId], references: [id], onDelete: Cascade)
+}
+
+model PrayerRequest {
+  id         String    @id @default(cuid())
+  studentId  String
+  staffId    String
+  date       DateTime  @default(now())
+  content    String
+  category   String    @default("other") // personal, family, academic, spiritual, health, other
+  status     String    @default("active") // active, answered, ongoing
+  isPrivate  Boolean   @default(false)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  staff   Staff   @relation(fields: [staffId], references: [id], onDelete: Cascade)
+}
+
+model ActionItem {
+  id            String       @id @default(cuid())
+  studentId     String?
+  staffId       String
+  interactionId String?
+  description   String
+  dueDate       DateTime?
+  status        String       @default("pending") // pending, in_progress, completed
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  student     Student?     @relation(fields: [studentId], references: [id], onDelete: SetNull)
+  staff       Staff        @relation(fields: [staffId], references: [id], onDelete: Cascade)
+  interaction Interaction? @relation(fields: [interactionId], references: [id], onDelete: SetNull)
+}
