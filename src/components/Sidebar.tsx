@@ -42,8 +42,8 @@ export default function Sidebar() {
             <Church className="w-6 h-6 text-white" />
           </div>
           <div>
-            <h1 className="text-lg font-bold text-slate-800">Ministry</h1>
-            <p className="text-xs text-slate-500">Student Tracker</p>
+            <h1 className="text-lg font-bold text-slate-800">FBCO</h1>
+            <p className="text-xs text-slate-500">College Students</p>
           </div>
         </Link>
       </div>

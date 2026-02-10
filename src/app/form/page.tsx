@@ -81,7 +81,7 @@ export default function PublicFormPage() {
           <div className="w-16 h-16 bg-primary-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
             <Church className="w-8 h-8 text-white" />
           </div>
-          <h1 className="text-2xl font-bold text-slate-800">Connect With Us</h1>
+          <h1 className="text-2xl font-bold text-slate-800">FBCO College Students</h1>
           <p className="text-slate-500 mt-2">
             We'd love to get to know you better! Fill out the form below.
           </p>
