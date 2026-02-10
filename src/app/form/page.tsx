@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { Church, CheckCircle } from 'lucide-react';
+import Image from 'next/image';
+import { CheckCircle } from 'lucide-react';
 
 const yearOptions = [
   { value: '', label: 'Select your year...' },
@@ -85,10 +86,17 @@ export default function PublicFormPage() {
       <div className="w-full max-w-lg mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-primary-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <Church className="w-8 h-8 text-white" />
+          <div className="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-4 overflow-hidden bg-primary-700">
+            <Image
+              src="/logo.png"
+              alt="FBC Opelika"
+              width={80}
+              height={80}
+              className="object-contain"
+              priority
+            />
           </div>
-          <h1 className="text-2xl font-bold text-slate-800">FBCO College Students</h1>
+          <h1 className="text-2xl font-bold text-primary-700">FBCO College Students</h1>
           <p className="text-slate-500 mt-2">
             We'd love to get to know you better! Fill out the form below.
           </p>

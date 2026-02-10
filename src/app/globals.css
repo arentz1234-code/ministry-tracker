@@ -87,6 +87,45 @@ body {
     @apply badge bg-slate-100 text-slate-800;
   }
 
+  /* Gender-specific badges */
+  .badge-male {
+    @apply badge bg-blue-100 text-blue-700;
+  }
+
+  .badge-female {
+    @apply badge bg-pink-100 text-pink-700;
+  }
+
+  /* Year-specific badges */
+  .badge-freshman {
+    @apply badge bg-emerald-100 text-emerald-700;
+  }
+
+  .badge-sophomore {
+    @apply badge bg-amber-100 text-amber-700;
+  }
+
+  .badge-junior {
+    @apply badge bg-purple-100 text-purple-700;
+  }
+
+  .badge-senior {
+    @apply badge bg-rose-100 text-rose-700;
+  }
+
+  .badge-grad {
+    @apply badge bg-indigo-100 text-indigo-700;
+  }
+
+  /* Gender-specific avatar backgrounds */
+  .avatar-male {
+    @apply bg-blue-100 text-blue-600;
+  }
+
+  .avatar-female {
+    @apply bg-pink-100 text-pink-600;
+  }
+
   .sidebar-link {
     @apply flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-100 hover:text-slate-900 rounded-lg transition-colors duration-200;
   }
@@ -99,13 +138,13 @@ body {
 /* FullCalendar customization */
 .fc {
   --fc-border-color: #e2e8f0;
-  --fc-button-bg-color: #3b82f6;
-  --fc-button-border-color: #3b82f6;
-  --fc-button-hover-bg-color: #2563eb;
-  --fc-button-hover-border-color: #2563eb;
-  --fc-button-active-bg-color: #1d4ed8;
-  --fc-button-active-border-color: #1d4ed8;
-  --fc-today-bg-color: #eff6ff;
+  --fc-button-bg-color: #1e3a5f;
+  --fc-button-border-color: #1e3a5f;
+  --fc-button-hover-bg-color: #2d4a6f;
+  --fc-button-hover-border-color: #2d4a6f;
+  --fc-button-active-bg-color: #162c48;
+  --fc-button-active-border-color: #162c48;
+  --fc-today-bg-color: #e8eef5;
 }
 
 .fc .fc-button {

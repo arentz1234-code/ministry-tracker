@@ -93,6 +93,34 @@ export default function StudentsPage() {
     }
   };
 
+  const getYearBadge = (year: string) => {
+    switch (year) {
+      case 'Freshman':
+        return 'badge-freshman';
+      case 'Sophomore':
+        return 'badge-sophomore';
+      case 'Junior':
+        return 'badge-junior';
+      case 'Senior':
+        return 'badge-senior';
+      case 'Grad':
+        return 'badge-grad';
+      default:
+        return 'badge-gray';
+    }
+  };
+
+  const getAvatarClass = (gender: string | null) => {
+    switch (gender?.toLowerCase()) {
+      case 'male':
+        return 'avatar-male';
+      case 'female':
+        return 'avatar-female';
+      default:
+        return 'bg-primary-100 text-primary-600';
+    }
+  };
+
   return (
     <div>
       {/* Header */}
@@ -165,8 +193,8 @@ export default function StudentsPage() {
               className="card hover:shadow-md transition-all duration-200 cursor-pointer"
             >
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center">
-                  <span className="text-lg font-semibold text-primary-600">
+                <div className={`w-12 h-12 rounded-full flex items-center justify-center ${getAvatarClass(student.gender)}`}>
+                  <span className="text-lg font-semibold">
                     {student.name.charAt(0)}
                   </span>
                 </div>
@@ -175,10 +203,17 @@ export default function StudentsPage() {
                     <h3 className="font-semibold text-slate-800 truncate">{student.name}</h3>
                     <span className={getStatusBadge(student.status)}>{student.status}</span>
                   </div>
-                  <p className="text-sm text-slate-500">
-                    {student.gender ? `${student.gender.charAt(0).toUpperCase() + student.gender.slice(1)} • ` : ''}
-                    {student.year} • {student.major || 'No major'}
-                  </p>
+                  <div className="flex items-center gap-2 text-sm text-slate-500">
+                    {student.gender && (
+                      <span className={student.gender.toLowerCase() === 'male' ? 'text-blue-600' : 'text-pink-600'}>
+                        {student.gender.charAt(0).toUpperCase() + student.gender.slice(1)}
+                      </span>
+                    )}
+                    {student.gender && <span>•</span>}
+                    <span className={getYearBadge(student.year)}>{student.year}</span>
+                    <span>•</span>
+                    <span>{student.major || 'No major'}</span>
+                  </div>
                   {student.email && (
                     <p className="text-sm text-slate-400 truncate">{student.email}</p>
                   )}

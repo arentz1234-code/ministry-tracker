@@ -10,16 +10,16 @@ const config: Config = {
     extend: {
       colors: {
         primary: {
-          50: '#eff6ff',
-          100: '#dbeafe',
-          200: '#bfdbfe',
-          300: '#93c5fd',
-          400: '#60a5fa',
-          500: '#3b82f6',
-          600: '#2563eb',
-          700: '#1d4ed8',
-          800: '#1e40af',
-          900: '#1e3a8a',
+          50: '#e8eef5',
+          100: '#c5d5e8',
+          200: '#9fb8d6',
+          300: '#7899c3',
+          400: '#5a7fb5',
+          500: '#3d66a7',
+          600: '#2d4a6f',
+          700: '#1e3a5f',  // Main brand color
+          800: '#162c48',
+          900: '#0f1f32',
         },
         accent: {
           50: '#f0fdf4',

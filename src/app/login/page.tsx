@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { Church } from 'lucide-react';
+import Image from 'next/image';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 
@@ -45,10 +45,17 @@ export default function LoginPage() {
         <div className="card">
           {/* Logo */}
           <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-primary-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <Church className="w-8 h-8 text-white" />
+            <div className="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-4 overflow-hidden bg-primary-700">
+              <Image
+                src="/logo.png"
+                alt="FBC Opelika"
+                width={80}
+                height={80}
+                className="object-contain"
+                priority
+              />
             </div>
-            <h1 className="text-2xl font-bold text-slate-800">FBCO College Students</h1>
+            <h1 className="text-2xl font-bold text-primary-700">FBCO College Students</h1>
             <p className="text-slate-500 mt-1">Sign in to your account</p>
           </div>
 

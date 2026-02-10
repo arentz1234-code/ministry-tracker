@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { signOut, useSession } from 'next-auth/react';
 import {
@@ -12,7 +13,6 @@ import {
   Settings,
   LogOut,
   ChevronRight,
-  Church,
 } from 'lucide-react';
 
 const navItems = [
@@ -38,11 +38,18 @@ export default function Sidebar() {
       {/* Logo */}
       <div className="p-6 border-b border-slate-200">
         <Link href="/" className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-primary-600 rounded-lg flex items-center justify-center">
-            <Church className="w-6 h-6 text-white" />
+          <div className="w-10 h-10 rounded-lg flex items-center justify-center overflow-hidden bg-primary-700">
+            <Image
+              src="/logo.png"
+              alt="FBC Opelika"
+              width={40}
+              height={40}
+              className="object-contain"
+              priority
+            />
           </div>
           <div>
-            <h1 className="text-lg font-bold text-slate-800">FBCO</h1>
+            <h1 className="text-lg font-bold text-primary-700">FBCO</h1>
             <p className="text-xs text-slate-500">College Students</p>
           </div>
         </Link>
