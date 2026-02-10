@@ -97,23 +97,24 @@ export default async function DashboardPage() {
   return (
     <div>
       {/* Header */}
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800">
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-800">
             Welcome back, {session?.user?.name?.split(' ')[0]}!
           </h1>
-          <p className="text-slate-500">Here's what's happening with your ministry</p>
+          <p className="text-sm sm:text-base text-slate-500">Here's what's happening with your ministry</p>
         </div>
         <div className="flex gap-3">
-          <Link href="/students/new" className="btn-primary flex items-center gap-2">
+          <Link href="/students/new" className="btn-primary flex items-center gap-2 text-sm sm:text-base">
             <Plus className="w-4 h-4" />
-            Add Student
+            <span className="hidden sm:inline">Add Student</span>
+            <span className="sm:hidden">Add</span>
           </Link>
         </div>
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 mb-8">
         {statCards.map((stat) => {
           const Icon = stat.icon;
           return (
@@ -122,13 +123,13 @@ export default async function DashboardPage() {
               href={stat.href}
               className="card hover:shadow-md transition-shadow cursor-pointer"
             >
-              <div className="flex items-center gap-4">
-                <div className={`w-12 h-12 ${stat.color} rounded-lg flex items-center justify-center`}>
-                  <Icon className="w-6 h-6 text-white" />
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
+                <div className={`w-10 h-10 sm:w-12 sm:h-12 ${stat.color} rounded-lg flex items-center justify-center`}>
+                  <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-slate-800">{stat.value}</p>
-                  <p className="text-sm text-slate-500">{stat.label}</p>
+                  <p className="text-xl sm:text-2xl font-bold text-slate-800">{stat.value}</p>
+                  <p className="text-xs sm:text-sm text-slate-500">{stat.label}</p>
                 </div>
               </div>
             </Link>

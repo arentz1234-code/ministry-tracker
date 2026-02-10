@@ -62,22 +62,22 @@ export default function FollowUpsPage() {
 
   const FollowUpCard = ({ followUp }: { followUp: FollowUp }) => (
     <div className="card hover:shadow-md transition-shadow">
-      <div className="flex items-start justify-between">
-        <div className="flex items-start gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+        <div className="flex items-start gap-3 sm:gap-4">
           <div
-            className="w-10 h-10 rounded-full flex items-center justify-center text-white text-sm font-medium"
+            className="w-10 h-10 rounded-full flex items-center justify-center text-white text-sm font-medium flex-shrink-0"
             style={{ backgroundColor: followUp.staff?.color || '#3b82f6' }}
           >
             {followUp.student?.name.charAt(0)}
           </div>
-          <div>
+          <div className="min-w-0">
             <Link
               href={`/students/${followUp.student?.id}`}
               className="font-semibold text-slate-800 hover:text-primary-600"
             >
               {followUp.student?.name}
             </Link>
-            <div className="flex items-center gap-2 mt-1">
+            <div className="flex flex-wrap items-center gap-2 mt-1">
               <Calendar className="w-4 h-4 text-slate-400" />
               <span className={`text-sm ${
                 isPast(new Date(followUp.dueDate)) && !followUp.completed
@@ -97,7 +97,7 @@ export default function FollowUpsPage() {
           </div>
         </div>
         {!followUp.completed && (
-          <Button size="sm" variant="success" onClick={() => handleComplete(followUp.id)}>
+          <Button size="sm" variant="success" onClick={() => handleComplete(followUp.id)} className="w-full sm:w-auto flex-shrink-0">
             <Check className="w-4 h-4 mr-1" />
             Done
           </Button>
@@ -109,10 +109,10 @@ export default function FollowUpsPage() {
   return (
     <div>
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800">Follow-Ups</h1>
-          <p className="text-slate-500">Manage your student follow-up reminders</p>
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-800">Follow-Ups</h1>
+          <p className="text-sm text-slate-500">Manage your student follow-up reminders</p>
         </div>
         <Select
           options={[
@@ -122,7 +122,7 @@ export default function FollowUpsPage() {
           ]}
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
-          className="w-40"
+          className="w-full sm:w-40"
         />
       </div>
 

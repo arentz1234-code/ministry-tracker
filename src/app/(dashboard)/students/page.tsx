@@ -124,13 +124,13 @@ export default function StudentsPage() {
   return (
     <div>
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800">Students</h1>
-          <p className="text-slate-500">{students.length} students in database</p>
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-800">Students</h1>
+          <p className="text-sm text-slate-500">{students.length} students in database</p>
         </div>
         <Link href="/students/new">
-          <Button>
+          <Button className="w-full sm:w-auto">
             <Plus className="w-4 h-4 mr-2" />
             Add Student
           </Button>
@@ -139,37 +139,39 @@ export default function StudentsPage() {
 
       {/* Filters */}
       <div className="card mb-6">
-        <div className="flex flex-wrap gap-4">
-          <div className="flex-1 min-w-[200px]">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-              <input
-                type="text"
-                placeholder="Search by name, email, or major..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="input pl-10"
-              />
-            </div>
+        <div className="space-y-3">
+          {/* Search */}
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+            <input
+              type="text"
+              placeholder="Search by name, email, or major..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="input pl-10"
+            />
           </div>
-          <Select
-            options={statusOptions}
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            className="w-40"
-          />
-          <Select
-            options={yearOptions}
-            value={yearFilter}
-            onChange={(e) => setYearFilter(e.target.value)}
-            className="w-40"
-          />
-          <Select
-            options={genderOptions}
-            value={genderFilter}
-            onChange={(e) => setGenderFilter(e.target.value)}
-            className="w-40"
-          />
+          {/* Filter dropdowns */}
+          <div className="grid grid-cols-3 gap-2 sm:flex sm:flex-wrap sm:gap-4">
+            <Select
+              options={statusOptions}
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className="w-full sm:w-32"
+            />
+            <Select
+              options={yearOptions}
+              value={yearFilter}
+              onChange={(e) => setYearFilter(e.target.value)}
+              className="w-full sm:w-32"
+            />
+            <Select
+              options={genderOptions}
+              value={genderFilter}
+              onChange={(e) => setGenderFilter(e.target.value)}
+              className="w-full sm:w-32"
+            />
+          </div>
         </div>
       </div>
 

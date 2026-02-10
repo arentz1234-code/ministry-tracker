@@ -209,18 +209,22 @@ export default function StudentProfilePage() {
   return (
     <div>
       {/* Header */}
-      <div className="flex items-start justify-between mb-6">
-        <div className="flex items-center gap-4">
+      <div className="mb-6">
+        <div className="flex items-center gap-2 mb-4">
           <Link href="/students" className="p-2 hover:bg-slate-100 rounded-lg transition-colors">
             <ArrowLeft className="w-5 h-5 text-slate-600" />
           </Link>
+          <span className="text-sm text-slate-500">Back to Students</span>
+        </div>
+
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center">
-              <span className="text-2xl font-bold text-primary-600">{student.name.charAt(0)}</span>
+            <div className="w-14 h-14 sm:w-16 sm:h-16 bg-primary-100 rounded-full flex items-center justify-center">
+              <span className="text-xl sm:text-2xl font-bold text-primary-600">{student.name.charAt(0)}</span>
             </div>
             <div>
-              <div className="flex items-center gap-2">
-                <h1 className="text-2xl font-bold text-slate-800">{student.name}</h1>
+              <div className="flex flex-wrap items-center gap-2">
+                <h1 className="text-xl sm:text-2xl font-bold text-slate-800">{student.name}</h1>
                 <span className={`badge ${
                   student.status === 'active' ? 'badge-success' :
                   student.status === 'inactive' ? 'badge-warning' :
@@ -229,23 +233,23 @@ export default function StudentProfilePage() {
                   {student.status}
                 </span>
               </div>
-              <p className="text-slate-500">{student.year} • {student.major || 'No major listed'}</p>
+              <p className="text-sm text-slate-500">{student.year} • {student.major || 'No major listed'}</p>
             </div>
           </div>
-        </div>
-        <div className="flex items-center gap-2">
-          <Link href={`/students/${student.id}/edit`}>
-            <Button variant="secondary">
-              <Edit className="w-4 h-4 mr-2" />
-              Edit
-            </Button>
-          </Link>
-          {isAdmin && (
-            <Button variant="danger" onClick={() => setShowDeleteModal(true)}>
-              <Trash2 className="w-4 h-4 mr-2" />
-              Delete
-            </Button>
-          )}
+          <div className="flex items-center gap-2">
+            <Link href={`/students/${student.id}/edit`} className="flex-1 sm:flex-none">
+              <Button variant="secondary" className="w-full sm:w-auto">
+                <Edit className="w-4 h-4 mr-2" />
+                Edit
+              </Button>
+            </Link>
+            {isAdmin && (
+              <Button variant="danger" onClick={() => setShowDeleteModal(true)} className="flex-1 sm:flex-none">
+                <Trash2 className="w-4 h-4 mr-2" />
+                Delete
+              </Button>
+            )}
+          </div>
         </div>
       </div>
 
@@ -329,18 +333,20 @@ export default function StudentProfilePage() {
         <div className="lg:col-span-2">
           <div className="card">
             {/* Tabs */}
-            <div className="flex border-b border-slate-200 mb-6">
+            <div className="flex overflow-x-auto border-b border-slate-200 mb-6 -mx-6 px-6 sm:mx-0 sm:px-0">
               {tabs.map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
+                  className={`px-3 sm:px-4 py-3 text-xs sm:text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
                     activeTab === tab.id
                       ? 'border-primary-600 text-primary-600'
                       : 'border-transparent text-slate-500 hover:text-slate-700'
                   }`}
                 >
-                  {tab.label} ({tab.count})
+                  <span className="hidden sm:inline">{tab.label}</span>
+                  <span className="sm:hidden">{tab.label.split(' ')[0]}</span>
+                  <span className="ml-1">({tab.count})</span>
                 </button>
               ))}
             </div>
@@ -518,7 +524,7 @@ export default function StudentProfilePage() {
         size="lg"
       >
         <form onSubmit={handleAddInteraction} className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Input
               label="Date & Time"
               type="datetime-local"
@@ -593,7 +599,7 @@ export default function StudentProfilePage() {
         title="Schedule Follow-Up"
       >
         <form onSubmit={handleAddFollowUp} className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Input
               label="Due Date"
               type="date"

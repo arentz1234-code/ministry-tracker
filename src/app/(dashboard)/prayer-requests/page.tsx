@@ -86,16 +86,16 @@ export default function PrayerRequestsPage() {
   return (
     <div>
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800">Prayer Requests</h1>
-          <p className="text-slate-500">Track and pray for student needs</p>
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-800">Prayer Requests</h1>
+          <p className="text-sm text-slate-500">Track and pray for student needs</p>
         </div>
         <Select
           options={statusOptions}
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
-          className="w-40"
+          className="w-full sm:w-40"
         />
       </div>
 
@@ -110,8 +110,8 @@ export default function PrayerRequestsPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {prayerRequests.map((prayer) => (
             <div key={prayer.id} className="card hover:shadow-md transition-shadow">
-              <div className="flex items-start justify-between mb-3">
-                <div className="flex items-center gap-2">
+              <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2 mb-3">
+                <div className="flex flex-wrap items-center gap-2">
                   <span className={`badge ${getCategoryColor(prayer.category)}`}>
                     {categoryLabels[prayer.category] || prayer.category}
                   </span>
@@ -137,7 +137,7 @@ export default function PrayerRequestsPage() {
 
               <p className="text-sm text-slate-600 mt-2">{prayer.content}</p>
 
-              <div className="flex items-center justify-between mt-4 pt-4 border-t border-slate-100">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mt-4 pt-4 border-t border-slate-100">
                 <p className="text-xs text-slate-400">
                   Added by {prayer.staff?.name}
                 </p>
@@ -146,6 +146,7 @@ export default function PrayerRequestsPage() {
                     size="sm"
                     variant="success"
                     onClick={() => handleUpdateStatus(prayer.id, 'answered')}
+                    className="w-full sm:w-auto"
                   >
                     <Check className="w-4 h-4 mr-1" />
                     Answered
