@@ -14,6 +14,9 @@ export async function GET(request: NextRequest) {
   const year = searchParams.get('year');
   const gender = searchParams.get('gender');
   const tag = searchParams.get('tag');
+  const page = parseInt(searchParams.get('page') || '1');
+  const limit = parseInt(searchParams.get('limit') || '20');
+  const skip = (page - 1) * limit;
 
   const where: any = {};
 
@@ -41,21 +44,34 @@ export async function GET(request: NextRequest) {
     where.tags = { contains: tag };
   }
 
-  const students = await prisma.student.findMany({
-    where,
-    orderBy: { name: 'asc' },
-    include: {
-      _count: {
-        select: {
-          interactions: true,
-          followUps: true,
-          prayerRequests: true,
+  const [students, total] = await Promise.all([
+    prisma.student.findMany({
+      where,
+      orderBy: { name: 'asc' },
+      skip,
+      take: limit,
+      include: {
+        _count: {
+          select: {
+            interactions: true,
+            followUps: true,
+            prayerRequests: true,
+          },
         },
       },
+    }),
+    prisma.student.count({ where }),
+  ]);
+
+  return NextResponse.json({
+    students,
+    pagination: {
+      page,
+      limit,
+      total,
+      totalPages: Math.ceil(total / limit),
     },
   });
-
-  return NextResponse.json(students);
 }
 
 export async function POST(request: NextRequest) {
