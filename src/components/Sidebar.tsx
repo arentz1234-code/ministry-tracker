@@ -69,7 +69,7 @@ export default function Sidebar() {
 
       {/* User Section */}
       <div className="p-4 border-t border-slate-200">
-        {session?.user?.role === 'admin' && (
+        {(session?.user as any)?.role === 'admin' && (
           <Link href="/settings" className="sidebar-link mb-2">
             <Settings className="w-5 h-5" />
             <span>Settings</span>
