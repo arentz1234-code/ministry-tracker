@@ -3,8 +3,6 @@
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
-import Link from 'next/link';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 
@@ -48,13 +46,12 @@ export default function LoginPage() {
           {/* Logo */}
           <div className="text-center mb-8">
             <div className="w-24 h-24 rounded-2xl flex items-center justify-center mx-auto mb-6 overflow-hidden bg-primary-700 shadow-lg">
-              <Image
+              <img
                 src="/logo.png"
                 alt="FBC Opelika"
                 width={96}
                 height={96}
                 className="object-contain"
-                priority
               />
             </div>
             <h1 className="text-2xl font-bold text-primary-700">FBCO College Ministry</h1>

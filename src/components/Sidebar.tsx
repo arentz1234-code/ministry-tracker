@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { signOut, useSession } from 'next-auth/react';
 import {
@@ -69,13 +68,12 @@ export default function Sidebar() {
       <header className="lg:hidden fixed top-0 left-0 right-0 h-16 bg-white border-b border-slate-200 flex items-center justify-between px-4 z-40">
         <Link href="/" className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-lg flex items-center justify-center overflow-hidden bg-primary-700">
-            <Image
+            <img
               src="/logo.png"
               alt="FBC Opelika"
               width={40}
               height={40}
               className="object-contain"
-              priority
             />
           </div>
           <div>
@@ -109,13 +107,12 @@ export default function Sidebar() {
         <div className="p-6 border-b border-slate-200 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-lg flex items-center justify-center overflow-hidden bg-primary-700">
-              <Image
+              <img
                 src="/logo.png"
                 alt="FBC Opelika"
                 width={40}
                 height={40}
                 className="object-contain"
-                priority
               />
             </div>
             <div>

@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
 import { CheckCircle } from 'lucide-react';
 
 const yearOptions = [
@@ -87,13 +86,12 @@ export default function PublicFormPage() {
         {/* Header */}
         <div className="text-center mb-8">
           <div className="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-4 overflow-hidden bg-primary-700">
-            <Image
+            <img
               src="/logo.png"
               alt="FBC Opelika"
               width={80}
               height={80}
               className="object-contain"
-              priority
             />
           </div>
           <h1 className="text-2xl font-bold text-primary-700">FBCO College Students</h1>

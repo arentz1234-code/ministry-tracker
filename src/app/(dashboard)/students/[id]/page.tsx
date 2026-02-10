@@ -91,6 +91,12 @@ export default function StudentProfilePage() {
     isPrivate: false,
   });
 
+  const [newNote, setNewNote] = useState({
+    date: format(new Date(), 'yyyy-MM-dd'),
+    content: '',
+  });
+  const [savingNote, setSavingNote] = useState(false);
+
   const fetchStudent = async () => {
     const res = await fetch(`/api/students/${params.id}`);
     if (res.ok) {
@@ -189,6 +195,29 @@ export default function StudentProfilePage() {
     }
   };
 
+  const handleAddNote = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newNote.content.trim()) return;
+
+    setSavingNote(true);
+    const noteEntry = `[${newNote.date}] ${newNote.content.trim()}`;
+    const updatedNotes = student?.notes
+      ? `${noteEntry}\n${student.notes}`
+      : noteEntry;
+
+    const res = await fetch(`/api/students/${student?.id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ notes: updatedNotes }),
+    });
+
+    if (res.ok) {
+      setNewNote({ date: format(new Date(), 'yyyy-MM-dd'), content: '' });
+      fetchStudent();
+    }
+    setSavingNote(false);
+  };
+
   if (loading) {
     return <div className="text-center py-12 text-slate-500">Loading...</div>;
   }
@@ -197,11 +226,42 @@ export default function StudentProfilePage() {
     return <div className="text-center py-12 text-slate-500">Student not found</div>;
   }
 
+  // Parse notes into dated entries
+  const parseNotes = (notesStr: string | null): { date: string; content: string }[] => {
+    if (!notesStr) return [];
+    const entries: { date: string; content: string }[] = [];
+    const lines = notesStr.split('\n');
+    let currentDate = '';
+    let currentContent: string[] = [];
+
+    for (const line of lines) {
+      const dateMatch = line.match(/^\[(\d{4}-\d{2}-\d{2})\]\s*(.*)/);
+      if (dateMatch) {
+        if (currentDate && currentContent.length > 0) {
+          entries.push({ date: currentDate, content: currentContent.join('\n').trim() });
+        }
+        currentDate = dateMatch[1];
+        currentContent = dateMatch[2] ? [dateMatch[2]] : [];
+      } else if (currentDate) {
+        currentContent.push(line);
+      } else if (line.trim()) {
+        // Legacy note without date
+        entries.push({ date: '', content: line.trim() });
+      }
+    }
+    if (currentDate && currentContent.length > 0) {
+      entries.push({ date: currentDate, content: currentContent.join('\n').trim() });
+    }
+    return entries;
+  };
+
+  const notesEntries = parseNotes(student.notes);
+
   const tabs = [
     { id: 'interactions', label: 'Interactions', count: student.interactions.length },
     { id: 'followups', label: 'Follow-Ups', count: student.followUps.length },
     { id: 'prayers', label: 'Prayer Requests', count: student.prayerRequests.length },
-    { id: 'tasks', label: 'Action Items', count: student.actionItems.length },
+    { id: 'notes', label: 'Notes', count: notesEntries.length },
   ];
 
   const isAdmin = (session?.user as any)?.role === 'admin';
@@ -298,14 +358,6 @@ export default function StudentProfilePage() {
                   <span key={tag} className="badge-primary">{tag.trim()}</span>
                 ))}
               </div>
-            </div>
-          )}
-
-          {/* Notes */}
-          {student.notes && (
-            <div className="card">
-              <h3 className="font-semibold text-slate-800 mb-4">Notes</h3>
-              <p className="text-sm text-slate-600 whitespace-pre-wrap">{student.notes}</p>
             </div>
           )}
 
@@ -479,33 +531,45 @@ export default function StudentProfilePage() {
               </div>
             )}
 
-            {/* Action Items Tab */}
-            {activeTab === 'tasks' && (
+            {/* Notes Tab */}
+            {activeTab === 'notes' && (
               <div className="space-y-4">
-                {student.actionItems.length === 0 ? (
-                  <p className="text-center text-slate-500 py-8">No action items</p>
+                {/* Add Note Form */}
+                <form onSubmit={handleAddNote} className="p-4 bg-primary-50 rounded-lg border border-primary-100">
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <input
+                      type="date"
+                      value={newNote.date}
+                      onChange={(e) => setNewNote({ ...newNote, date: e.target.value })}
+                      className="px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white"
+                    />
+                    <input
+                      type="text"
+                      value={newNote.content}
+                      onChange={(e) => setNewNote({ ...newNote, content: e.target.value })}
+                      placeholder="Add a note..."
+                      className="flex-1 px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    />
+                    <Button type="submit" size="sm" disabled={savingNote || !newNote.content.trim()}>
+                      <Plus className="w-4 h-4 mr-1" />
+                      Add
+                    </Button>
+                  </div>
+                </form>
+
+                {/* Notes List */}
+                {notesEntries.length === 0 ? (
+                  <p className="text-center text-slate-500 py-8">No notes yet</p>
                 ) : (
-                  student.actionItems.map((item) => (
-                    <div key={item.id} className={`p-4 rounded-lg ${
-                      item.status === 'completed' ? 'bg-green-50' : 'bg-slate-50'
-                    }`}>
-                      <div className="flex items-start justify-between">
-                        <div>
-                          <p className="text-sm text-slate-700">{item.description}</p>
-                          <div className="flex items-center gap-2 mt-2">
-                            <span className={`badge ${
-                              item.status === 'completed' ? 'badge-success' :
-                              item.status === 'in_progress' ? 'badge-warning' : 'badge-gray'
-                            }`}>
-                              {item.status.replace('_', ' ')}
-                            </span>
-                            {item.dueDate && (
-                              <span className="text-xs text-slate-500">
-                                Due: {format(new Date(item.dueDate), 'MMM d')}
-                              </span>
-                            )}
+                  notesEntries.map((note, idx) => (
+                    <div key={idx} className="p-4 bg-slate-50 rounded-lg">
+                      <div className="flex items-start gap-3">
+                        {note.date && (
+                          <div className="flex-shrink-0 px-2 py-1 bg-white rounded border border-slate-200 text-xs font-medium text-slate-600">
+                            {format(new Date(note.date + 'T12:00:00'), 'MMM d, yyyy')}
                           </div>
-                        </div>
+                        )}
+                        <p className="text-sm text-slate-700 whitespace-pre-wrap flex-1">{note.content}</p>
                       </div>
                     </div>
                   ))
