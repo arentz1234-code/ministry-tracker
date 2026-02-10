@@ -24,6 +24,11 @@ const statusOptions = [
   { value: 'transferred', label: 'Transferred' },
 ];
 
+const genderOptions = [
+  { value: 'male', label: 'Male' },
+  { value: 'female', label: 'Female' },
+];
+
 export default function NewStudentPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -33,6 +38,7 @@ export default function NewStudentPage() {
     name: '',
     email: '',
     phone: '',
+    gender: 'male',
     year: 'Freshman',
     major: '',
     address: '',
@@ -107,6 +113,12 @@ export default function NewStudentPage() {
                 type="tel"
                 value={formData.phone}
                 onChange={(e) => handleChange('phone', e.target.value)}
+              />
+              <Select
+                label="Gender *"
+                options={genderOptions}
+                value={formData.gender}
+                onChange={(e) => handleChange('gender', e.target.value)}
               />
               <Select
                 label="Year *"

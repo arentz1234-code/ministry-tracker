@@ -5,12 +5,12 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
-    const { name, email, phone, year, major, prayerRequest } = body;
+    const { name, email, phone, gender, year, major, prayerRequest } = body;
 
     // Validate required fields
-    if (!name || !phone || !year) {
+    if (!name || !phone || !year || !gender) {
       return NextResponse.json(
-        { error: 'Name, phone, and year are required' },
+        { error: 'Name, phone, gender, and year are required' },
         { status: 400 }
       );
     }
@@ -33,6 +33,7 @@ export async function POST(request: NextRequest) {
           name,
           email: email || student.email,
           phone,
+          gender: gender || student.gender,
           year,
           major: major || student.major,
         },
@@ -44,6 +45,7 @@ export async function POST(request: NextRequest) {
           name,
           email: email || null,
           phone,
+          gender: gender || null,
           year,
           major: major || null,
           status: 'active',

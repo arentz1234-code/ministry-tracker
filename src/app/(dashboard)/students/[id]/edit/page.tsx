@@ -24,6 +24,11 @@ const statusOptions = [
   { value: 'transferred', label: 'Transferred' },
 ];
 
+const genderOptions = [
+  { value: 'male', label: 'Male' },
+  { value: 'female', label: 'Female' },
+];
+
 export default function EditStudentPage() {
   const router = useRouter();
   const params = useParams();
@@ -37,6 +42,7 @@ export default function EditStudentPage() {
     name: '',
     email: '',
     phone: '',
+    gender: 'male',
     year: 'Freshman',
     major: '',
     address: '',
@@ -58,6 +64,7 @@ export default function EditStudentPage() {
         name: data.name || '',
         email: data.email || '',
         phone: data.phone || '',
+        gender: data.gender || 'male',
         year: data.year || 'Freshman',
         major: data.major || '',
         address: data.address || '',
@@ -138,6 +145,12 @@ export default function EditStudentPage() {
               type="tel"
               value={formData.phone}
               onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+            />
+            <Select
+              label="Gender"
+              options={genderOptions}
+              value={formData.gender}
+              onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
             />
             <Select
               label="Year"

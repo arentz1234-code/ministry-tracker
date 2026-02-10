@@ -70,6 +70,7 @@ export async function PUT(
       name: body.name,
       email: body.email || null,
       phone: body.phone || null,
+      gender: body.gender || null,
       year: body.year,
       major: body.major || null,
       address: body.address || null,

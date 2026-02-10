@@ -12,11 +12,18 @@ const yearOptions = [
   { value: 'Grad', label: 'Graduate Student' },
 ];
 
+const genderOptions = [
+  { value: '', label: 'Select...' },
+  { value: 'male', label: 'Male' },
+  { value: 'female', label: 'Female' },
+];
+
 export default function PublicFormPage() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
+    gender: '',
     year: '',
     major: '',
     prayerRequest: '',
@@ -135,6 +142,26 @@ export default function PublicFormPage() {
                 className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 placeholder="(555) 123-4567"
               />
+            </div>
+
+            {/* Gender */}
+            <div>
+              <label htmlFor="gender" className="block text-sm font-medium text-slate-700 mb-1">
+                Gender <span className="text-red-500">*</span>
+              </label>
+              <select
+                id="gender"
+                required
+                value={formData.gender}
+                onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
+                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white"
+              >
+                {genderOptions.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
             </div>
 
             {/* Year */}

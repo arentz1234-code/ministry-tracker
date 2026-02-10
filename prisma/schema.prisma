@@ -28,6 +28,7 @@ model Student {
   name          String
   email         String?
   phone         String?
+  gender        String?        // male, female
   year          String         // Freshman, Sophomore, Junior, Senior, Grad
   major         String?
   address       String?

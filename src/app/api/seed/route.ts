@@ -56,6 +56,7 @@ export async function GET(request: Request) {
           name: 'Sarah Johnson',
           email: 'sarah.johnson@university.edu',
           phone: '555-0101',
+          gender: 'female',
           year: 'Junior',
           major: 'Psychology',
           status: 'active',
@@ -68,6 +69,7 @@ export async function GET(request: Request) {
           name: 'Michael Chen',
           email: 'michael.chen@university.edu',
           phone: '555-0102',
+          gender: 'male',
           year: 'Sophomore',
           major: 'Computer Science',
           status: 'active',
@@ -78,6 +80,7 @@ export async function GET(request: Request) {
       prisma.student.create({
         data: {
           name: 'Emily Davis',
+          gender: 'female',
           email: 'emily.davis@university.edu',
           phone: '555-0103',
           year: 'Senior',
