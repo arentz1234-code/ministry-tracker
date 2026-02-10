@@ -4,8 +4,6 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Search, Plus, Filter, User, MessageSquare, Bell, Heart } from 'lucide-react';
 import Button from '@/components/ui/Button';
-import Input from '@/components/ui/Input';
-import Select from '@/components/ui/Select';
 
 interface Student {
   id: string;
@@ -139,9 +137,9 @@ export default function StudentsPage() {
 
       {/* Filters */}
       <div className="card mb-6">
-        <div className="space-y-3">
+        <div className="flex flex-col lg:flex-row gap-4">
           {/* Search */}
-          <div className="relative">
+          <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
             <input
               type="text"
@@ -152,25 +150,35 @@ export default function StudentsPage() {
             />
           </div>
           {/* Filter dropdowns */}
-          <div className="grid grid-cols-3 gap-2 sm:flex sm:flex-wrap sm:gap-4">
-            <Select
-              options={statusOptions}
+          <div className="flex flex-wrap items-center gap-2">
+            <Filter className="w-4 h-4 text-slate-400 hidden sm:block" />
+            <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="w-full sm:w-32"
-            />
-            <Select
-              options={yearOptions}
+              className="px-3 py-2 bg-slate-100 border-0 rounded-lg text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-primary-500 cursor-pointer hover:bg-slate-200 transition-colors"
+            >
+              {statusOptions.map((option) => (
+                <option key={option.value} value={option.value}>{option.label}</option>
+              ))}
+            </select>
+            <select
               value={yearFilter}
               onChange={(e) => setYearFilter(e.target.value)}
-              className="w-full sm:w-32"
-            />
-            <Select
-              options={genderOptions}
+              className="px-3 py-2 bg-slate-100 border-0 rounded-lg text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-primary-500 cursor-pointer hover:bg-slate-200 transition-colors"
+            >
+              {yearOptions.map((option) => (
+                <option key={option.value} value={option.value}>{option.label}</option>
+              ))}
+            </select>
+            <select
               value={genderFilter}
               onChange={(e) => setGenderFilter(e.target.value)}
-              className="w-full sm:w-32"
-            />
+              className="px-3 py-2 bg-slate-100 border-0 rounded-lg text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-primary-500 cursor-pointer hover:bg-slate-200 transition-colors"
+            >
+              {genderOptions.map((option) => (
+                <option key={option.value} value={option.value}>{option.label}</option>
+              ))}
+            </select>
           </div>
         </div>
       </div>
